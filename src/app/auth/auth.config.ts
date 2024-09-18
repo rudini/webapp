@@ -1,7 +1,7 @@
 import {
   StsConfigStaticLoader,
 } from 'angular-auth-oidc-client';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 export const authConfigProviderFactory = () => {
   const config = {
