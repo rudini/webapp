@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
-import { authConfigProviderFactory } from './auth/auth.config';
+import { authConfigProviderFactory } from './core/auth/auth.config';
+
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -13,6 +13,7 @@ describe('AppComponent', () => {
         loader: {
           provide: StsConfigLoader,
           useFactory: authConfigProviderFactory,
+
         },
       })]
     }).compileComponents();

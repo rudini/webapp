@@ -1,17 +1,17 @@
 import { ApplicationConfig, inject, InjectionToken, PLATFORM_ID, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
-import { routes } from './app.routes';
+import { APP_ROUTES } from './app.routes';
 import { provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
-import { authConfigProviderFactory } from './auth/auth.config';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { provideHttpClient } from '@angular/common/http';
+import { authConfigProviderFactory } from './core/auth/auth.config';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(APP_ROUTES),
     provideClientHydration(withHttpTransferCacheOptions({ includePostRequests: true })),
     provideAuth({
       loader: {

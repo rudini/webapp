@@ -7,18 +7,17 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'webapp';
 
   constructor(private oidcSecurityService: OidcSecurityService) {
     afterNextRender(() => {
-
-    this.oidcSecurityService.checkAuth().subscribe((isAuthenticated) => {
-      console.log('app authenticated', isAuthenticated);
+      this.oidcSecurityService.checkAuth().subscribe((isAuthenticated) => {
+        console.log('app authenticated', isAuthenticated);
+      });
     });
-  });
   }
 
   login() {
