@@ -28,7 +28,7 @@ export class AppConfigService {
   async loadAppConfig(): Promise<void> {
     return environment.production
       ? firstValueFrom(
-          this.http.get('/config').pipe(
+          this.http.get(`${environment.redirectUrl}/config`).pipe(
             tap((config: any) => {
               this.config = {
                 redirectUrl: config['SPA_REDIRECT_URL'],
