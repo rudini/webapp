@@ -15,7 +15,7 @@ import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { authConfigProviderFactory } from './core/auth/auth.config';
 import { firstValueFrom, tap } from 'rxjs';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
