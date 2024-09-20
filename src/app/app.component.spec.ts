@@ -3,17 +3,26 @@ import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { authConfigProviderFactory } from './core/auth/auth.config';
+import { AppConfigService, initializeApp } from './app.config';
+import { APP_INITIALIZER } from '@angular/core';
 
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [provideHttpClient(), provideAuth({
+      providers: [provideHttpClient(),
+        {
+          provide: APP_INITIALIZER,
+          useFactory: initializeApp,
+          multi: true,
+          deps: [AppConfigService],
+        },
+        provideAuth({
         loader: {
           provide: StsConfigLoader,
           useFactory: authConfigProviderFactory,
-
+          deps: [AppConfigService]
         },
       })]
     }).compileComponents();
