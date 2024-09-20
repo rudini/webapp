@@ -28,6 +28,10 @@ export function app(): express.Express {
     }),
   );
 
+  server.get('/config',  (req, res, next) => {
+    res.status(200).json(process.env);
+  });
+
   // Serve static files from /browser
   server.get('**', express.static(browserDistFolder, {
     maxAge: '1y',
@@ -37,6 +41,8 @@ export function app(): express.Express {
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
+
+    console.log('Request:', originalUrl);
 
     commonEngine
       .render({

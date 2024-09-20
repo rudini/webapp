@@ -1,0 +1,12 @@
+<p>overview-page works!</p>
+
+@if (model()) {
+  @for (blog of model().data; track blog.id; let i = $index) {
+    <div class="blog" [class.highlight]="i === 0">
+      <h2>{{ blog.title }}</h2>
+      <p>{{ blog.contentPreview }}</p>
+    </div>
+  }
+}
+
+  <br>

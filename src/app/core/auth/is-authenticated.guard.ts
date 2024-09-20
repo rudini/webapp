@@ -4,7 +4,29 @@ import { CanActivateFn } from '@angular/router';
 import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 import { isPlatformBrowser } from '@angular/common';
 
-export function hasRole(role: string, jwtToken?: any) {
+
+function parseJwt(token?: string) {
+  if (!token) {
+    return {};
+  }
+
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split('')
+      .map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(''),
+  );
+
+  console.log(JSON.parse(jsonPayload));
+  return JSON.parse(jsonPayload);
+}
+
+export function hasRole(role: string, token?: string) {
+  const jwtToken = parseJwt(token);
   return !!(
     jwtToken &&
     jwtToken.realm_access &&
@@ -20,12 +42,10 @@ export const isAuthenticatedGuard: CanActivateFn = () => {
     initialValue: { isAuthenticated: false } as LoginResponse,
   })();
 
-  const accessToken = toSignal(authService.getPayloadFromAccessToken(), { initialValue: '' })();
-
   if (
     loginResponse.isAuthenticated &&
-    accessToken &&
-    hasRole('user', accessToken)
+    loginResponse.accessToken &&
+    hasRole('user', loginResponse.accessToken)
   ) {
     return true;
   } else {
