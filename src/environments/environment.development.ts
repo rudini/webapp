@@ -1,7 +1,7 @@
 export const environment = {
-  redirectUrl: 'http://localhost:4200',
-  postLogoutRedirectUri: 'http://localhost:4200',
-  silentRenewUrl: 'http://localhost:4200/silent-renew.html',
+  redirectUrl: 'https://hftm-webapp.azurewebsites.net',
+  postLogoutRedirectUri: 'https://hftm-webapp.azurewebsites.net',
+  silentRenewUrl: 'https://hftm-webapp.azurewebsites.net/silent-renew.html',
   serviceUrl:
-    'http://localhost:4200/api',
+    'https://hftm-webapp.azurewebsites.net/api',
 };
