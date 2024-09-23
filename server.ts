@@ -44,8 +44,6 @@ export function app(): express.Express {
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
-    console.log('Request:', originalUrl);
-
     commonEngine
       .render({
         bootstrap,

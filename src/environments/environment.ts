@@ -6,4 +6,5 @@ export const environment = {
   serviceUrl:
     'http://localhost:4000/api',
   authority: 'http://d-cap-keyclaok.kindbay-711f60b2.westeurope.azurecontainerapps.io/realms/blog',
+  configBaseUrl: 'https://hftm-webapp.azurewebsites.net',
 };

@@ -6,4 +6,5 @@ export const environment = {
   serviceUrl:
     'https://d-cap-blog-backend---v2.whitepond-b96fee4b.westeurope.azurecontainerapps.io',
   authority: 'https://d-cap-keyclaok.kindbay-711f60b2.westeurope.azurecontainerapps.io/realms/blog',
+  configBaseUrl: 'http://localhost:4200',
 };
