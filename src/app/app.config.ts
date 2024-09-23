@@ -2,6 +2,7 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   Injectable,
+  PLATFORM_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -16,6 +17,7 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { authConfigProviderFactory } from './core/auth/auth.config';
 import { firstValueFrom, tap } from 'rxjs';
 import { environment } from '../environments/environment';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +28,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) {}
 
   async loadAppConfig(): Promise<void> {
-    return environment.production
+    return environment.production && isPlatformBrowser(PLATFORM_ID)
       ? firstValueFrom(
           this.http.get(`${environment.redirectUrl}/config`).pipe(
             tap((config: any) => {
