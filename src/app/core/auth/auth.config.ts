@@ -1,19 +1,17 @@
 import { StsConfigStaticLoader } from 'angular-auth-oidc-client';
-import { AppConfigService } from '../../app.config';
+import { environment } from '../../../environments/environment';
 
-export const authConfigProviderFactory = (
-  appConfigService: AppConfigService
-) => {
-  const appConfig = appConfigService.getConfig();
+
+export const authConfigProviderFactory = () => {
   return new StsConfigStaticLoader({
-    authority: appConfig.authority,
-    redirectUrl: appConfig.redirectUrl,
-    postLogoutRedirectUri: appConfig.postLogoutRedirectUri,
+    authority: environment.authority,
+    redirectUrl: environment.redirectUrl,
+    postLogoutRedirectUri: environment.postLogoutRedirectUri,
     clientId: 'spa-blog',
     scope: 'openid profile email offline_access blogs', // 'openid profile ' + your scopes
     responseType: 'code',
     silentRenew: true,
-    silentRenewUrl: appConfig.silentRenewUrl,
+    silentRenewUrl: environment.silentRenewUrl,
     renewTimeBeforeTokenExpiresInSeconds: 10,
   });
 };

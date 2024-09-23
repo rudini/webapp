@@ -1,7 +1,5 @@
 import {
-  APP_INITIALIZER,
   ApplicationConfig,
-  Injectable,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -12,53 +10,11 @@ import {
   withHttpTransferCacheOptions,
 } from '@angular/platform-browser';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { authConfigProviderFactory } from './core/auth/auth.config';
-import { environment } from '../environments/environment';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AppConfigService {
-  private config?: AppConfig;
-
-  constructor(private http: HttpClient) {}
-
-  loadAppConfig() {
-    this.config = environment;
-    console.log('Configuration loaded.', this.config);
-  }
-
-  getConfig(): AppConfig {
-    if (!this.config) {
-      throw new Error('Configuration has not been loaded.');
-    }
-    return this.config;
-  }
-}
-
-export type AppConfig = {
-  redirectUrl: string;
-  postLogoutRedirectUri: string;
-  silentRenewUrl: string;
-  serviceUrl: string;
-  authority: string;
-};
-
-export function initializeApp(config: AppConfigService) {
-  return (): void =>
-    config
-      .loadAppConfig();
-}
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [AppConfigService],
-    },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideClientHydration(
@@ -68,7 +24,6 @@ export const appConfig: ApplicationConfig = {
       loader: {
         provide: StsConfigLoader,
         useFactory: authConfigProviderFactory,
-        deps: [AppConfigService],
       },
     }),
     provideHttpClient(),
