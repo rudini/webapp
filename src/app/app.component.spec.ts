@@ -3,7 +3,6 @@ import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { authConfigProviderFactory } from './core/auth/auth.config';
-import { AppConfigService, initializeApp } from './app.config';
 import { MockProvider } from 'ng-mocks';
 import { environment } from '../environments/environment';
 
@@ -13,12 +12,10 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [provideHttpClient(),
-        MockProvider(AppConfigService, { loadAppConfig: () => Promise.resolve(), getConfig: () => environment }),
         provideAuth({
         loader: {
           provide: StsConfigLoader,
           useFactory: authConfigProviderFactory,
-          deps: [AppConfigService]
         },
       })]
     }).compileComponents();
