@@ -28,7 +28,7 @@ export class AppConfigService {
   constructor(private http: HttpClient) {}
 
   async loadAppConfig(): Promise<void> {
-    return environment.production && isPlatformBrowser(PLATFORM_ID)
+    return environment.production
       ? firstValueFrom(
           this.http.get(`${environment.redirectUrl}/config`).pipe(
             tap((config: any) => {
