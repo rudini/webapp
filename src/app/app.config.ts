@@ -2,7 +2,6 @@ import {
   APP_INITIALIZER,
   ApplicationConfig,
   Injectable,
-  PLATFORM_ID,
   provideZoneChangeDetection,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -15,9 +14,7 @@ import {
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { authConfigProviderFactory } from './core/auth/auth.config';
-import { firstValueFrom, tap } from 'rxjs';
 import { environment } from '../environments/environment';
-import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -27,22 +24,9 @@ export class AppConfigService {
 
   constructor(private http: HttpClient) {}
 
-  async loadAppConfig(): Promise<void> {
-    return environment.production
-      ? firstValueFrom(
-          this.http.get(`${environment.configBaseUrl}/config`).pipe(
-            tap((config: any) => {
-              this.config = {
-                redirectUrl: config['SPA_REDIRECT_URL'],
-                postLogoutRedirectUri: config['SPA_POST_LOGOUT_REDIRECT_URI'],
-                silentRenewUrl: config['SPA_SILENT_RENEW_URL'],
-                serviceUrl: config['SPA_SERVICE_URL'],
-                authority: config['SPA_AUTHORITY'],
-              };
-            })
-          )
-        )
-      : (this.config = environment);
+  loadAppConfig() {
+    this.config = environment;
+    console.log('Configuration loaded.', this.config);
   }
 
   getConfig(): AppConfig {
@@ -62,10 +46,9 @@ export type AppConfig = {
 };
 
 export function initializeApp(config: AppConfigService) {
-  return (): Promise<void> =>
+  return (): void =>
     config
-      .loadAppConfig()
-      .then((config) => console.log('AppConfig loaded', config));
+      .loadAppConfig();
 }
 
 export const appConfig: ApplicationConfig = {
