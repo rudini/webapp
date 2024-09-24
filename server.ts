@@ -28,12 +28,6 @@ export function app(): express.Express {
     }),
   );
 
-  server.get('/config',  (req, res, next) => {
-    res.status(200).json(Object.keys(process.env).reduce((acc, cur, index) =>
-      cur.startsWith('SPA_') ? ({ ...acc, [cur]: process.env[cur] }) : acc
-    , {}));
-  });
-
   // Serve static files from /browser
   server.get('**', express.static(browserDistFolder, {
     maxAge: '1y',

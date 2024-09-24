@@ -3,8 +3,6 @@ import { AppComponent } from './app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAuth, StsConfigLoader } from 'angular-auth-oidc-client';
 import { authConfigProviderFactory } from './core/auth/auth.config';
-import { MockProvider } from 'ng-mocks';
-import { environment } from '../environments/environment';
 
 
 describe('AppComponent', () => {
