@@ -20,10 +20,9 @@ type Model = {
 };
 
 @Component({
-  selector: 'app-overview-page',
-  standalone: true,
-  imports: [],
-  templateUrl: './overview-page.component.html',
+    selector: 'app-overview-page',
+    imports: [],
+    templateUrl: './overview-page.component.html'
 })
 export class OverviewPageComponent {
 
